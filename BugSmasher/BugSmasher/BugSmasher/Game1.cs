@@ -14,7 +14,7 @@ namespace BugSmasher
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public static class Game1 : Microsoft.Xna.Framework.Game
+    public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -52,49 +52,26 @@ namespace BugSmasher
             Background = Content.Load<Texture2D>("background");
             Spritesheet = Content.Load<Texture2D>("spritesheet");
             Cursor = new Sprite(new Vector2(40, 40), Spritesheet, new Rectangle(135, 197, 48, 52), Vector2.Zero);
-            int X = Number.Next(1,400);
-            int Y = Number.Next(1,400);
-            for (int L = 0; L > 20; ++L)
+
+            for (int i = 0; i < 20; i++ )
             {
-                int I = 0;
-                ++I;
-                for (int K = 0; K > 20; ++K)
-                {
-                    Bugs[I] = new Sprite(new Vector2(X, Y), Spritesheet, new Rectangle(0, 0, 0, 0), Vector2.Zero);
-                }
 
-
-
-
+                spawnbug();
             }
         }
-
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
+        public void spawnbug()
+        {
+            
+            int X = Number.Next(1, 400);
+            int Y = Number.Next(1, 400);
+            Bugs.Add(new Sprite(new Vector2(0, Y), Spritesheet, new Rectangle(0, 0, 64, 64), new Vector2(100, 0)));
+        }
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+           
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// if (Check == 1)
-        ///    {int I = 0; }
-        ///    else if (Check == 2)
-       ///     {int I = 0;}
-       ///     else if (Check == 3)
-         ///   {int I = 0;}
-       ///     else if (Check == 4)
-        ///    {int I = 0;}
-         ///   else if (Check == 5)
-         ///   {int I = 0;}
-        ///    else if (Check == 6)
-        ///    {int I = 0;}
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
@@ -104,20 +81,16 @@ namespace BugSmasher
             // TODO: Add your update logic here
             
             base.Update(gameTime);
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
-            spriteBatch.Draw(Background, Vector2.Zero, Color.White);
-            int X = Number.Next(1, 400);
-            int Y = Number.Next(1, 400);
-            for (int L = 0; L > 20; ++L)
-            {
-                int I = 0;
-                ++I;
-                for (int K = 0; K > 20; ++K)
-                {
-                    Bugs[I].Update(gameTime);
-                }
 
+            for (int L = 0; L < Bugs.Count; L++)
+            {
+                int RandX = Number.Next(-3, 3);
+                int RandY = Number.Next(-3, 3);
+               
+                    Bugs[L].Update(gameTime);
             }
+            base.Update(gameTime);
+
         }
 
         /// <summary>
@@ -129,29 +102,17 @@ namespace BugSmasher
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+            spriteBatch.Begin();
            
-            SpriteBatch.Draw(Background, Vector2.Zero, Color.White);
+            spriteBatch.Draw(Background,new Rectangle(0,0,this.Window.ClientBounds.Width,this.Window.ClientBounds.Height), Color.White);
             int X = Number.Next(1, 400);
             int Y = Number.Next(1, 400);
-            for (int L = 0; L > 20; ++L)
+            for (int L = 0; L < Bugs.Count; L++)
             {
-                int I = 0;
-                ++I;
-                for (int K = 0; K > 20; ++K)
-                {
-                    Bugs[I].Draw(spriteBatch);
-                }
-
+                Bugs[L].Draw(spriteBatch);
             }
             spriteBatch.End(); 
             base.Draw(gameTime);
         }   
     }
 }
-//            GraphicsDevice.Clear(Color.CornflowerBlue);
-   //         spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
-       //     spriteBatch.Draw(background, Vector2.Zero, Color.White);
-    //        Bug.Draw(spriteBatch);
-       //     Cursor.Draw(spriteBatch);
-      //      spriteBatch.End();
