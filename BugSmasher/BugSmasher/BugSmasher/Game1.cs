@@ -81,14 +81,20 @@ namespace BugSmasher
             // TODO: Add your update logic here
             
             base.Update(gameTime);
-
+            MouseState ms = Mouse.GetState();
             for (int L = 0; L < Bugs.Count; L++)
             {
+                if (Bugs[L].IsBoxColliding(new Rectangle (ms.X,ms.Y,1,1))&&ms.LeftButton.Equals(ButtonState.Pressed))
+                {
+                    Bugs[L].Frame=new Rectangle(1,147,119,234);
+                }
                 int RandX = Number.Next(-3, 3);
                 int RandY = Number.Next(-3, 3);
-               
+                    ;
                     Bugs[L].Update(gameTime);
             }
+            
+            
             base.Update(gameTime);
 
         }
